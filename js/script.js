@@ -241,7 +241,13 @@ const start = document.getElementById('start'),
                 this.budgetDay = this.budgetMonth / 30;
             } 
             getTargetMonth() {
-                return Math.ceil(targetAmount.value / this.budgetMonth);
+                const target = Math.ceil(targetAmount.value / this.budgetMonth);
+                if (!isFinite(target) || target < 0) {
+                    return 'Цель не будет достигнута!';
+                } else {
+                    return target;
+                }
+                // return Math.ceil(targetAmount.value / this.budgetMonth);
             }
             getStatusIncome() {
                 if (this.budgetDay >= 800) {
@@ -266,7 +272,12 @@ const start = document.getElementById('start'),
                 }
             }
             calcSavedMoney() {
-                return this.budgetMonth * periodSelect.value;
+                const savedMoney = this.budgetMonth * periodSelect.value;
+                if (savedMoney < 0) {
+                    return 'Расходы превышают доходы!';
+                } else {
+                    return savedMoney;
+                }
             }
             changeDepositBlock() {
                 if (depositCheck.checked) {
